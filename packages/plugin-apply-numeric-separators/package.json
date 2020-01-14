@@ -1,0 +1,50 @@
+{
+  "name": "@putout/plugin-apply-numeric-separators",
+  "version": "1.0.0",
+  "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
+  "description": "putout plugin adds ability use numeric-separator on variable declarations",
+  "homepage": "http://github.com/coderaiser/putout",
+  "main": "lib/apply-numeric-separators.js",
+  "release": false,
+  "tag": false,
+  "changelog": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/coderaiser/putout.git"
+  },
+  "scripts": {
+    "test": "madrun test",
+    "lint": "madrun lint",
+    "fix:lint": "madrun fix:lint",
+    "coverage": "madrun coverage"
+  },
+  "dependencies": {},
+  "keywords": [
+    "putout",
+    "putout-plugin",
+    "plugin",
+    "numeric-separators"
+  ],
+  "devDependencies": {
+    "@putout/test": "^1.0.0",
+    "coveralls": "^3.0.0",
+    "eslint": "^6.0.0-rc.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-putout": "^1.5.0",
+    "lerna": "^3.8.5",
+    "madrun": "^5.4.1",
+    "nodemon": "^1.14.12",
+    "nyc": "^14.0.0",
+    "supertape": "^1.0.3"
+  },
+  "peerDependencies": {
+    "putout": ">=4.31"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
