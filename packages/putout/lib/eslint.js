@@ -1,6 +1,5 @@
 'use strict';
 
-const {CLIEngine, Linter} = require('eslint');
 const once = require('once');
 const tryCatch = require('try-catch');
 
@@ -17,8 +16,8 @@ const noConfigFound = (config, configError) => {
     return false;
 };
 
-const getCli = once(() => {
-    const cli = new CLIEngine({
+const getCli = once((constructor) => {
+    const cli = new constructor({
         ignorePattern: '!.*',
     });
     
@@ -63,8 +62,8 @@ const getPluginsStore = once(() => {
     };
 });
 
-const getLinter = (plugins, parser) => {
-    const linter = new Linter();
+const getLinter = (constructor, plugins, parser) => {
+    const linter = new constructor();
     const pluginsStore = getPluginsStore();
     
     if (parser)
@@ -76,13 +75,29 @@ const getLinter = (plugins, parser) => {
     return linter;
 };
 
+const requireEslint = once(() => {
+    const [e, eslint] = tryCatch(require, 'eslint');
+    
+    if (e)
+        return [e];
+    
+    return [null, eslint];
+});
+
 module.exports = ({name, code, fix}) => {
     const noChanges = [
         code,
         [],
     ];
     
-    const cli = getCli();
+    const [error, eslint] = requireEslint();
+    
+    if (error)
+        return noChanges;
+    
+    const {CLIEngine, Linter} = eslint;
+    
+    const cli = getCli(CLIEngine);
     const [configError, config] = tryCatch(cli.getConfigForFile, name);
     
     if (noConfigFound(config, configError))
@@ -99,7 +114,7 @@ module.exports = ({name, code, fix}) => {
     
     if (fix) {
         const {plugins, parser} = config;
-        const {output, messages} = getLinter(plugins, parser)
+        const {output, messages} = getLinter(Linter, plugins, parser)
             .verifyAndFix(code, config);
         
         return [
