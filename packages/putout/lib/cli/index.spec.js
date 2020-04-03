@@ -149,7 +149,7 @@ test('putout: cli: get git names', (t) => {
     t.end();
 });
 
-test('putout: cli: ruler processor', (t) => {
+test('putout: cli: ruler processor', async (t) => {
     const logError = stub();
     const rullerProcessor = stub();
     const getRullerProcessor = stub().returns(rullerProcessor);
@@ -162,7 +162,7 @@ test('putout: cli: ruler processor', (t) => {
     
     const cli = reRequire('.');
     
-    runCli({
+    await runCli({
         cli,
         argv,
         logError,

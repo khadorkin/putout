@@ -12,7 +12,7 @@ const isString = (a) => typeof a === 'string';
 const isStringAll = (...a) => a.filter(isString).length;
 const isRuler = (a) => a.disableAll || a.enableAll || isStringAll(a.disable, a.enable);
 
-module.exports = ({argv, halt, log, write, logError}) => {
+module.exports = async ({argv, halt, log, write, logError}) => {
     const args = yargsParser(argv, {
         boolean: [
             'cache',
@@ -156,9 +156,18 @@ module.exports = ({argv, halt, log, write, logError}) => {
         noOptions: !args.options,
     };
     
-    const places = files
-        .map(processFile(options))
-        .filter(Boolean);
+    const rawPlaces = [];
+    
+    const process = processFile(options);
+    const {length} = files;
+    
+    for (let i = 0; i < length; i++) {
+        const file = files[i];
+        const place = await process(file, i, {length});
+        rawPlaces.push(place);
+    }
+    
+    const places = rawPlaces.filter(Boolean);
     
     const mergedPlaces = merge(...places);
     
