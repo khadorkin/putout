@@ -57,6 +57,8 @@ module.exports = async ({argv, halt, log, write, logError}) => {
             options: true,
             updateCache: false,
             removeCache: false,
+            enable: '',
+            disable: '',
         },
     });
     
@@ -94,6 +96,15 @@ module.exports = async ({argv, halt, log, write, logError}) => {
         const help = require('./help');
         log(help());
         return exit();
+    }
+    
+    if (enable || disable) {
+        const getRulerProcessor = require('./ruler-processor');
+        const rulerProcessor = getRulerProcessor({
+            log,
+        });
+        
+        rulerProcessor({enable, disable}, []);
     }
     
     const stagedNames = [];
