@@ -284,13 +284,12 @@ test('putout: cli: --staged --fix', async (t) => {
 test('putout: cli: ruler processor: --enable', async (t) => {
     const logError = stub();
     const rullerProcessor = stub();
-    const getRullerProcessor = stub().returns(rullerProcessor);
     const argv = [
         '--enable',
         'convert-index-of-to-includes',
     ];
     
-    mockRequire('./ruler-processor', getRullerProcessor);
+    mockRequire('./ruler-processor', rullerProcessor);
     
     const cli = reRequire('.');
     await runCli({
@@ -314,13 +313,12 @@ test('putout: cli: ruler processor: --enable', async (t) => {
 test('putout: cli: ruler processor: --eneable-all', async (t) => {
     const logError = stub();
     const rullerProcessor = stub();
-    const getRullerProcessor = stub().returns(rullerProcessor);
     const argv = [
         '--enable-all',
         __filename,
     ];
     
-    mockRequire('./ruler-processor', getRullerProcessor);
+    mockRequire('./ruler-processor', rullerProcessor);
     
     const cli = reRequire('.');
     await runCli({
