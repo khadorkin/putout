@@ -205,8 +205,8 @@ test('putout: compare: __args__a', (t) => {
         }),
     };
     
-    const input = 'const y = (a, b) => alert(a, b);';
-    const expected = 'alert';
+    const input = 'const y = (a, b) => alert(a, b)';
+    const expected = 'const y = alert';
     
     const {code} = putout(input, {
         fixCount: 1,

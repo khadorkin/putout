@@ -88,6 +88,11 @@ module.exports.isArgs = (a) => {
     });
 };
 
+module.exports.isLinkedArgs = (a) => {
+    const b = !isArray(a) ? a : a[0];
+    return isIdentifier(b) && LINKED_ARGS.test(b.name);
+};
+
 module.exports.isPath = (path) => Boolean(path.node);
 module.exports.isArray = isArray;
 
